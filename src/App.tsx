@@ -110,7 +110,10 @@ export default function App() {
             The crisis in modern theoretical physics is characterized by a fundamental schism between the two pillars of twentieth-century science: <strong className="text-white font-medium">General Relativity</strong>, which describes the macroscopic universe as a deterministic, curved manifold, and <strong className="text-white font-medium">Quantum Mechanics</strong>, which defines the microscopic realm as a probabilistic wave-function evolution.
           </p>
           <p>
-            These two frameworks are ontologically incompatible, particularly at the Planck scale, where gravitational singularities and renormalization failures suggest that our understanding of the vacuum is incomplete. Substrate Mechanics offers a resolution to this impasse by positing that neither spacetime nor quantum uncertainty are fundamental features of reality. Instead, they are emergent properties of a deeper, pre-geometric tensor field, <MathBlock latex="\Phi_{ab}" />, operating within a stochastic medium.
+            Albert Einstein famously resisted the nondeterministic nature of the uncertainty principle. His conviction that "God does not play dice" was a demand for a complete physical theory that did not rely on the act of measurement to define state variables. Standard quantum mechanics fails to define what constitutes a "measurement" or where the "Heisenberg cut" between the quantum system and the classical apparatus should be placed.
+          </p>
+          <p>
+            These two frameworks are ontologically incompatible, particularly at the Planck scale. Substrate Mechanics offers a resolution to this epistemological crisis by positing that neither spacetime nor quantum uncertainty are fundamental features of reality. Instead, they are emergent properties of a deeper, pre-geometric tensor field, <MathBlock latex="\Phi_{ab}" />, operating within a stochastic medium. The transition from quantum to classical behavior is not a result of "magical observers" but an emergent property of this physical substrate.
           </p>
           <div className="mt-6 p-6 bg-white/5 rounded-xl border border-white/10">
             <h4 className="text-sm font-mono text-cyan-400 uppercase tracking-wider mb-4">The Hierarchy of Emergence</h4>
@@ -133,7 +136,7 @@ export default function App() {
 
         <Section title="Langevin Dynamics & The Substrate" icon={Atom}>
           <p>
-            The universe is composed of a complex, pre-geometric tensor field <MathBlock latex="\Phi_{ab}" /> that evolves in "stochastic time" (<MathBlock latex="\tau" />). This parameter represents the sequential update of substrate states rather than a geometric dimension. The dynamics are governed by a modified Langevin equation:
+            The universe is composed of a complex, pre-geometric tensor field <MathBlock latex="\Phi_{ab}" /> that evolves in "stochastic time" (<MathBlock latex="\tau" />). This parameter represents the sequential update of substrate states rather than a geometric dimension. Within this framework, the vacuum is not empty space but a continuous, non-particulate dielectric medium characterized by intrinsic properties such as impedance (<MathBlock latex="Z_0" />), permittivity (<MathBlock latex="\epsilon_0" />), and permeability (<MathBlock latex="\mu_0" />). The dynamics are governed by a modified Langevin equation:
           </p>
           <div className="my-8 p-6 bg-white/5 rounded-xl border border-white/10 backdrop-blur-sm shadow-lg">
             <MathBlock 
@@ -184,9 +187,74 @@ export default function App() {
             For microscopic particles (<MathBlock latex="\Gamma \ll 1" />), the noise term dominates, maintaining superposition. When mass reaches the <strong>Sherer Limit</strong> (~22 micrograms), <MathBlock latex="\Gamma \ge 1" />. The dampening term <MathBlock latex="(1-\Gamma)" /> cancels the noise, and the system "freezes" into a classical state due to the substrate's gravitational self-energy.
           </p>
           
+          <div className="my-8 overflow-x-auto">
+            <table className="w-full text-sm text-left text-gray-400">
+              <thead className="text-xs text-cyan-400 uppercase bg-white/5">
+                <tr>
+                  <th className="px-6 py-3">System Type</th>
+                  <th className="px-6 py-3">Mass Scale</th>
+                  <th className="px-6 py-3">Coupling <MathBlock latex="\Gamma" /></th>
+                  <th className="px-6 py-3">Regime</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-white/5">
+                  <td className="px-6 py-4">Electron</td>
+                  <td className="px-6 py-4"><MathBlock latex="10^{-30} \text{ kg}" /></td>
+                  <td className="px-6 py-4"><MathBlock latex="10^{-45}" /></td>
+                  <td className="px-6 py-4">Quantum (Pure Wave)</td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="px-6 py-4">Large Molecules</td>
+                  <td className="px-6 py-4"><MathBlock latex="10^{-24} \text{ kg}" /></td>
+                  <td className="px-6 py-4"><MathBlock latex="10^{-33}" /></td>
+                  <td className="px-6 py-4">Mesoscopic (Interference possible)</td>
+                </tr>
+                <tr className="border-b border-white/5 bg-cyan-900/20">
+                  <td className="px-6 py-4 font-bold text-cyan-300">Sherer Limit</td>
+                  <td className="px-6 py-4 font-bold text-cyan-300"><MathBlock latex="22 \mu\text{g}" /></td>
+                  <td className="px-6 py-4 font-bold text-cyan-300"><MathBlock latex="\approx 1.0" /></td>
+                  <td className="px-6 py-4 font-bold text-cyan-300">Transition (Collapse)</td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="px-6 py-4">Dust Mote</td>
+                  <td className="px-6 py-4"><MathBlock latex="1 \text{ mg}" /></td>
+                  <td className="px-6 py-4"><MathBlock latex="10^3" /></td>
+                  <td className="px-6 py-4">Classical (Pure Particle)</td>
+                </tr>
+                <tr>
+                  <td className="px-6 py-4">Human</td>
+                  <td className="px-6 py-4"><MathBlock latex="70 \text{ kg}" /></td>
+                  <td className="px-6 py-4"><MathBlock latex="10^{13}" /></td>
+                  <td className="px-6 py-4">Classical (Deterministic)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
           <div className="mt-8">
             <ShererLimitCalculator />
           </div>
+        </Section>
+
+        <Section title="Computational Proof: QuTiP Simulation" icon={Cpu}>
+          <p>
+            To demonstrate that substrate terms reproduce the quantum-to-classical transition, we utilize the Quantum Toolbox in Python (QuTiP) to model a "Topological Knot" as a quantum harmonic oscillator.
+          </p>
+          <p className="mt-4">
+            In the substrate model, we introduce a non-linear collapse operator that scales with <MathBlock latex="\Gamma" />. The "Drift" acts as a continuous position measurement performed by the substrate itself. The "Collapse Rate" in the Lindblad master equation is defined by:
+          </p>
+          <div className="my-6 flex justify-center p-4 bg-white/5 rounded-xl border border-white/10">
+            <MathBlock block latex="\text{collapse\_rate} = \sqrt{\Gamma \cdot f_{\text{update}}}" className="text-xl text-cyan-100" />
+          </div>
+          <p>
+            Simulating a "Cat State" (<MathBlock latex="|coherent(2)\rangle + |coherent(-2)\rangle" />) reveals:
+          </p>
+          <ul className="list-disc list-inside mt-4 space-y-2 text-gray-400">
+            <li><strong>Low Mass (<MathBlock latex="M < 1.0" />):</strong> <MathBlock latex="\Gamma \approx 0" />. High fringe visibility; particle behaves as a wave.</li>
+            <li><strong>The Sherer Spike (<MathBlock latex="M \approx 1.0" />):</strong> Quadratic scaling of <MathBlock latex="\Gamma" /> activates the collapse rate sharply. The non-linear drift forces the wave function to "choose" a position.</li>
+            <li><strong>High Mass (<MathBlock latex="M > 1.0" />):</strong> Coherence drops to zero instantly. Standard QM predicts a flat line, failing to account for this natural transition.</li>
+          </ul>
         </Section>
 
         <Section title="Emergent Spacetime & Dark Energy" icon={Globe}>
@@ -245,9 +313,12 @@ export default function App() {
           </p>
         </Section>
 
-        <Section title="Experimental Validation" icon={Radio}>
+        <Section title="Empirical Data & TEQ Project" icon={Radio}>
           <p>
-            The <strong>Substrate Interferometer</strong> is designed to detect the "noise floor" of the universe. By levitating a 22-microgram silica nanosphere in ultra-high vacuum, we can measure the anomalous decoherence rate <MathBlock latex="\lambda_{sub}" />.
+            Theoretical predictions must be validated against high-precision experimental data. The <strong>TEQ (Testing the Large-Scale Limit of Quantum Mechanics)</strong> project investigates this boundary using levitated nanoparticles in ultra-low noise environments.
+          </p>
+          <p className="mt-4">
+            Non-interferometric tests monitor a system's energy for "spontaneous heating"—a predicted side-effect of the collapse process. If Substrate Mechanics is correct, the "Decoherence Rate vs. Mass" dataset should exhibit a non-linear "spike" as the mass approaches the 22-microgram scale.
           </p>
           
           <div className="my-8 p-6 bg-white/5 rounded-xl border border-white/10">
@@ -259,8 +330,54 @@ export default function App() {
             />
           </div>
           
+          <h3 className="text-xl font-serif text-white mt-8 mb-4">Insights from ZnS Nanoparticles</h3>
+          <p className="mb-4">
+            The study of ZnS nanoparticles provides a practical example of size-dependent thresholds. The transition in electrical conduction mechanisms mirrors the substrate logic where the "spatial extent" of a topological knot relative to the substrate's update frequency determines its quantum status.
+          </p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left text-gray-400">
+              <thead className="text-xs text-cyan-400 uppercase bg-white/5">
+                <tr>
+                  <th className="px-6 py-3">Parameter</th>
+                  <th className="px-6 py-3">ZnS Nanoparticle Study</th>
+                  <th className="px-6 py-3">Substrate Mechanics Model</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-white/5">
+                  <td className="px-6 py-4 font-medium text-white">Key Formula</td>
+                  <td className="px-6 py-4">Debye-Scherrer (<MathBlock latex="D = K\lambda/\beta\cos\theta" />)</td>
+                  <td className="px-6 py-4">Sherer Limit (<MathBlock latex="\Gamma = GM^2/\hbar c" />)</td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="px-6 py-4 font-medium text-white">Critical Scale</td>
+                  <td className="px-6 py-4">Crystallite Size (<MathBlock latex="\sim 4.47 \text{ nm}" />)</td>
+                  <td className="px-6 py-4">Planck Mass (<MathBlock latex="\sim 22 \mu\text{g}" />)</td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="px-6 py-4 font-medium text-white">Observation</td>
+                  <td className="px-6 py-4">Peak Broadening (Quantum Size Effect)</td>
+                  <td className="px-6 py-4">Coherence Collapse (Classical Transition)</td>
+                </tr>
+                <tr>
+                  <td className="px-6 py-4 font-medium text-white">Mechanism</td>
+                  <td className="px-6 py-4">Lattice Strain / Dislocation</td>
+                  <td className="px-6 py-4">Substrate Drift / Noise</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </Section>
+
+        <Section title="Gravitational Decoherence & Time Dilation" icon={Globe}>
           <p>
-            Standard quantum mechanics predicts a linear scaling. Substrate Mechanics predicts a non-linear <strong>"Sherer Spike"</strong> proportional to <MathBlock latex="M^2" /> as mass approaches the Sherer Limit. Observation of this spike would falsify the universality of standard QM and confirm the substrate's structural drag.
+            Decoherence is not just an environmental effect but a universal gravitational phenomenon. In Substrate Mechanics, the intrinsic fuzziness of spacetime at the Planck scale is the noise term <MathBlock latex="\eta_{ab}" />.
+          </p>
+          <p className="mt-4">
+            When the spatial distance between two states in a superposition becomes large enough, the gravitational time dilation between those "branches" causes them to dephase. The "update frequency" of the substrate is influenced by the local gravitational potential, leading to a self-measuring universe.
+          </p>
+          <p className="mt-4">
+            Recent studies on atomic clock interferometers show that relativistic time dilation causes entanglement between internal states (the "clock") and position. In the substrate model, this is the "Drift" forcing the topological knot to synchronize with the local substrate frequency. A "coherence lag" across a gradient eventually forces a collapse into a localized particle.
           </p>
         </Section>
 
@@ -287,9 +404,12 @@ export default function App() {
             </div>
             
             <div>
-              <h4 className="text-white font-medium text-lg">Localized <MathBlock latex="\Lambda" /> Modulation</h4>
+              <h4 className="text-white font-medium text-lg">Localized <MathBlock latex="\Lambda" /> Modulation & Tesla's Waves</h4>
               <p className="text-gray-400 mt-2">
                 By locally suppressing noise variance (<MathBlock latex="\eta_{ab}^2" />), one can engineer gradients in vacuum pressure. This allows for apparent superluminal transit via metric contraction, where speed is limited only by the substrate's update rate (<MathBlock latex="f_{update}" />) rather than light speed (<MathBlock latex="c" />).
+              </p>
+              <p className="text-gray-400 mt-4">
+                This framework offers a reinterpretation of historical anomalies, such as Nikola Tesla's reported observations of superluminal wave propagation (<MathBlock latex="1.573c" />). Substrate Mechanics employs algebraic response operators (<MathBlock latex="R" />) to describe how matter and energy displace the substrate. These "substrate waves" are longitudinal excitations of the medium itself, which can propagate faster than transverse electromagnetic waves constrained by the Lieb-Robinson bound (<MathBlock latex="c" />).
               </p>
             </div>
           </div>
